@@ -4,7 +4,7 @@ version = "0.1.0"
 edition = "2024"
 rust-version = "1.91"
 license = "MIT"
-description = "Inject CLAUDE.md/AGENTS.md rule files into session start (port of pi's claude-rules)."
+description = "Inject repository rule files before the first agent request"
 
 [[bin]]
 name = "gray-rules"

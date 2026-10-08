@@ -1,10 +1,10 @@
 //! gray-rules — inject rule files into the session before the first request.
 //!
-//! Port of pi's `claude-rules` extension, adapted to the gray wire: on
-//! `agent/before_start` the sidecar reads, in order, `~/.claude/CLAUDE.md`,
-//! `<session.cwd>/CLAUDE.md`, and `<session.cwd>/AGENTS.md`, and returns
-//! their concatenated contents (capped at 16 KiB) as the pre-turn user
-//! message. `/rules` shows which files would be injected for the session.
+//! On `agent/before_start` the sidecar reads, in order,
+//! `~/.claude/CLAUDE.md`, `<session.cwd>/CLAUDE.md`, and
+//! `<session.cwd>/AGENTS.md`, and returns their concatenated contents
+//! (capped at 16 KiB) as the pre-turn user message. `/rules` shows which
+//! files would be injected for the session.
 
 use std::io::{BufRead, Write};
 use std::path::{Path, PathBuf};
