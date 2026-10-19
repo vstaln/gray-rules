@@ -28,7 +28,9 @@ fn manifest() -> Value {
 /// The candidate rule files, in injection order.
 fn candidates(cwd: &Path) -> Vec<PathBuf> {
     let mut v = Vec::with_capacity(3);
-    if let Some(home) = std::env::var_os("HOME") {
+    if let Some(home) = std::env::var_os("HOME")
+        .filter(|v| !v.is_empty())
+        .or_else(|| std::env::var_os("USERPROFILE").filter(|v| !v.is_empty())) {
         v.push(Path::new(&home).join(".claude").join("CLAUDE.md"));
     }
     v.push(cwd.join("CLAUDE.md"));
