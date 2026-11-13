@@ -21,6 +21,7 @@ fn manifest() -> Value {
         "protocol": "2.0",
         "tools": [],
         "commands": ["/rules"],
+        "command_descriptions": {"/rules": "show which rule files get injected"},
         "hooks": ["agent/before_start"],
     })
 }
