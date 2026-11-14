@@ -78,7 +78,7 @@ jobs:
           version=${GITHUB_REF_NAME#v}
           mkdir -p dist
           cp plugin.sh stage/plugin.sh
-          chmod 755 stage/plugin.sh
+          find stage -type f -exec chmod 755 {} +
           tar --owner=0 --group=0 --numeric-owner --mtime=@0 --sort=name -cf - \
             -C stage plugin.sh \
             aarch64-apple-darwin aarch64-unknown-linux-musl \
