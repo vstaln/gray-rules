@@ -20,7 +20,7 @@ fn manifest() -> Value {
         "version": env!("CARGO_PKG_VERSION"),
         "protocol": "2.0",
         "tools": [],
-        "description": "load",
+        "description": "load repo rule files before the first turn",
         "commands": ["/rules"],
         "command_descriptions": {"/rules": "show which rule files get injected"},
         "hooks": ["agent/before_start"],
