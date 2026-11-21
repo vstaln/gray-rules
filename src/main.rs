@@ -32,7 +32,8 @@ fn candidates(cwd: &Path) -> Vec<PathBuf> {
     let mut v = Vec::with_capacity(3);
     if let Some(home) = std::env::var_os("HOME")
         .filter(|v| !v.is_empty())
-        .or_else(|| std::env::var_os("USERPROFILE").filter(|v| !v.is_empty())) {
+        .or_else(|| std::env::var_os("USERPROFILE").filter(|v| !v.is_empty()))
+    {
         v.push(Path::new(&home).join(".claude").join("CLAUDE.md"));
     }
     v.push(cwd.join("CLAUDE.md"));
@@ -73,7 +74,9 @@ fn inject_text(cwd: &Path) -> Option<String> {
         if out.len() >= CAP {
             break;
         }
-        let Ok(body) = std::fs::read_to_string(&file) else { continue };
+        let Ok(body) = std::fs::read_to_string(&file) else {
+            continue;
+        };
         if body.trim().is_empty() {
             continue;
         }
@@ -162,7 +165,9 @@ fn main() -> std::io::Result<()> {
     let mut stdout = std::io::stdout();
     for line in stdin.lock().lines() {
         let line = line?;
-        let Ok(req) = serde_json::from_str::<Value>(&line) else { continue };
+        let Ok(req) = serde_json::from_str::<Value>(&line) else {
+            continue;
+        };
         let (reply, exit) = handle(&req);
         if let Some(reply) = reply {
             writeln!(stdout, "{reply}")?;
@@ -180,7 +185,9 @@ mod tests {
     use super::*;
 
     fn call(method: &str, params: Value) -> Value {
-        handle(&json!({ "id": 1, "method": method, "params": params })).0.unwrap()
+        handle(&json!({ "id": 1, "method": method, "params": params }))
+            .0
+            .unwrap()
     }
 
     /// A fresh temp dir that removes itself on drop.
@@ -257,7 +264,12 @@ mod tests {
             "command/run",
             json!({ "name": "/rules", "argv": [], "session": { "cwd": dir.0 } }),
         );
-        assert!(r["result"]["text"].as_str().unwrap().contains("no rule files"));
+        assert!(
+            r["result"]["text"]
+                .as_str()
+                .unwrap()
+                .contains("no rule files")
+        );
         std::fs::write(dir.0.join("AGENTS.md"), "rules!").unwrap();
         let r = call(
             "command/run",
